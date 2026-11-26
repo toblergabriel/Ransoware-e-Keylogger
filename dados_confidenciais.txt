@@ -1,0 +1,2 @@
+Arquivo ficticio para demonstracao de criptografia.
+Nao inserir dados pessoais ou informacoes reais neste laboratorio.

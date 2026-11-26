@@ -1,0 +1,2 @@
+usuario_teste: exemplo
+senha_teste: NAO_E_UMA_SENHA_REAL
