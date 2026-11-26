@@ -1,48 +1,58 @@
-# Estudos de Cibersegurança com Python
-### Ransomware simulado | DIO
+# 🔐 Estudos de Cibersegurança com Python
+### Simulação de Ransomware e Keylogger
 
-## Sobre o projeto
+## 📌 Sobre o projeto
 
-Projeto desenvolvido durante os estudos na Digital Innovation One (DIO), com o objetivo de compreender conceitos de cibersegurança por meio de um experimento controlado em Python.
+Este projeto foi desenvolvido para estudos pessoais, com o objetivo de compreender, na prática, o funcionamento de algumas ameaças digitais utilizando a linguagem Python.
 
-Esta versão do material contém a simulação de um **Ransomware**, com scripts para criptografar e descriptografar arquivos de teste usando a biblioteca `cryptography` e o mecanismo Fernet.
+O projeto apresenta dois experimentos educacionais:
 
-> **Escopo:** o ZIP enviado contém os scripts do experimento de Ransomware. Não foi encontrado um script de Keylogger entre os arquivos recebidos, então essa parte não é apresentada como implementada.
+- **Ransomware Simulado:** estudo de criptografia e descriptografia de arquivos, com geração de uma mensagem fictícia de resgate.
+- **Keylogger Simulado:** estudo da captura de eventos do teclado utilizando Python e registro das teclas em um arquivo de texto.
 
-## Estrutura
+A proposta é entender como essas ameaças funcionam, identificar os riscos envolvidos e conhecer medidas de prevenção e defesa.
 
-```text
-estudos-ciberseguranca-python/
-├── README.md
-└── ransoware/
-    ├── ransoware.py
-    ├── descriptografar.py
-    └── test_files/
-        ├── senhas.txt
-        └── dados_confidenciais.txt
-```
+## 🎯 Objetivos
 
-Os arquivos `.txt` desta versão foram substituídos por conteúdo fictício. A chave `chave.key` e a mensagem `LEIA ISSO.txt` são geradas durante a execução e não são incluídas no repositório.
+- Compreender o funcionamento básico de Ransomware e Keylogger.
+- Explorar bibliotecas Python utilizadas em estudos de segurança.
+- Entender os conceitos de criptografia e descriptografia.
+- Estudar a captura de eventos do teclado.
+- Identificar riscos relacionados à exposição de informações.
+- Conhecer mecanismos de proteção contra ameaças digitais.
 
-## Como funciona
+---
 
-### `ransoware.py`
+## 🦠 1. Ransomware Simulado
 
-- Gera uma chave Fernet e grava em `chave.key`.
-- Lê os arquivos do diretório `test_files`.
-- Criptografa o conteúdo desses arquivos.
-- Gera `LEIA ISSO.txt` com uma mensagem fictícia de resgate.
+O primeiro experimento aborda o funcionamento de um Ransomware, um tipo de malware que utiliza criptografia para impedir o acesso aos arquivos de uma vítima.
 
-### `descriptografar.py`
+### Arquivos utilizados
 
-- Carrega a chave `chave.key`.
-- Localiza os arquivos em `test_files`.
-- Descriptografa os conteúdos para restaurar os arquivos.
+- `ransoware.py`: responsável pela geração da chave e criptografia dos arquivos.
+- `descriptografar.py`: responsável por recuperar os arquivos utilizando a chave gerada.
+- `chave.key`: arquivo que armazena a chave criptográfica.
+- `LEIA ISSO.txt`: mensagem fictícia de resgate.
+- `test_files/`: diretório com arquivos utilizados nos experimentos.
 
-## Requisitos
+### Funcionamento
 
-- Python 3
-- Biblioteca `cryptography`
+**Criptografia:**
+1. Geração de uma chave utilizando Fernet.
+2. Armazenamento da chave em um arquivo.
+3. Leitura dos arquivos presentes no diretório de testes.
+4. Criptografia dos arquivos.
+5. Criação de uma mensagem fictícia de resgate.
+
+**Descriptografia:**
+1. Leitura da chave criptográfica.
+2. Localização dos arquivos de teste.
+3. Descriptografia dos conteúdos.
+4. Recuperação dos arquivos originais.
+
+### Biblioteca utilizada
+
+`cryptography` — biblioteca Python utilizada para implementar a criptografia Fernet.
 
 Instalação:
 
@@ -50,55 +60,108 @@ Instalação:
 python -m pip install cryptography
 ```
 
-## Execução
+---
 
-Abra o terminal dentro da pasta `ransoware`:
+## ⌨️ 2. Keylogger Simulado
+
+O segundo experimento aborda o funcionamento de um Keylogger, ferramenta capaz de registrar eventos do teclado durante sua execução.
+
+O script foi desenvolvido utilizando Python e a biblioteca `pynput`.
+
+### Funcionamento
+
+O programa utiliza um listener para identificar as teclas pressionadas e registrar as informações em um arquivo chamado `log.txt`.
+
+Entre as funcionalidades estudadas estão:
+
+- Captura de caracteres digitados.
+- Registro de espaços e quebras de linha.
+- Identificação de teclas especiais.
+- Ignorar determinadas teclas modificadoras, como Shift, Ctrl e Alt.
+- Registro dos eventos em um arquivo `.txt`.
+
+### Tratamento das teclas
+
+O código utiliza condições para diferenciar algumas teclas especiais:
+
+| Tecla | Comportamento |
+|---|---|
+| Espaço | Registra um espaço |
+| Enter | Adiciona uma quebra de linha |
+| Tab | Registra uma tabulação |
+| Backspace | Registra um espaço no arquivo |
+| Esc | Registra `[ESC]` |
+| Shift / Ctrl / Alt | Ignora os eventos |
+| Outras teclas especiais | Registra sua representação |
+
+### Biblioteca utilizada
+
+`pynput` — biblioteca Python que permite monitorar e controlar dispositivos de entrada, como teclado e mouse.
+
+Instalação:
 
 ```bash
-python ransoware.py
+python -m pip install pynput
 ```
 
-Para restaurar os arquivos, execute:
+Execução:
 
 ```bash
-python descriptografar.py
+python keylogger.py
 ```
 
-**Importante:** execute a descriptografia com a mesma chave gerada na etapa de criptografia. Não apague nem substitua `chave.key` antes de restaurar os arquivos.
+O arquivo `log.txt` é criado no diretório de execução e recebe os registros durante o funcionamento do programa.
 
-Use somente arquivos descartáveis em `test_files`. O script sobrescreve os arquivos durante a criptografia. Não execute novamente a criptografia sobre arquivos que já estejam criptografados: uma nova chave será gerada e poderá impedir a recuperação com a chave anterior.
-
-## Conceitos estudados
-
-- Criptografia e descriptografia de arquivos.
-- Criptografia simétrica autenticada com Fernet.
-- Geração e armazenamento de chaves.
-- Impacto de ransomware na disponibilidade dos dados.
-- Importância de backups e de ambientes isolados para testes.
-
-## Defesa e prevenção
-
-- Manter backups atualizados e testar a restauração.
-- Utilizar antivírus/EDR e manter o sistema atualizado.
-- Aplicar o princípio do menor privilégio.
-- Desconfiar de anexos e links inesperados.
-- Isolar arquivos e programas suspeitos em sandbox.
-- Proteger chaves criptográficas e credenciais.
-
-## Limitações
-
-Este é um exercício didático e simplificado. A chave é armazenada localmente e os scripts atuam apenas sobre o diretório de testes configurado. O experimento não representa uma solução de segurança nem um ransomware real completo.
-
-## Keylogger
-
-O material enviado para esta versão não continha um script de Keylogger. Essa etapa poderá ser adicionada posteriormente, com foco em captura autorizada, privacidade e mecanismos de defesa.
-
-## Créditos
-
-Estudo realizado durante a trilha de cibersegurança com Python da **Digital Innovation One (DIO)**.
-
-**Autor:** Gabriel  
-**Área:** Cibersegurança e Python
+**Observação:** este experimento não possui implementação de envio automático por e-mail. O código apresentado realiza somente a captura e o registro local dos eventos.
 
 ---
-*Entender como as ameaças funcionam também faz parte de aprender a se defender delas.*
+
+## 🛡️ 3. Segurança e Prevenção
+
+Além dos experimentos, o projeto aborda algumas medidas importantes para proteção contra ameaças digitais:
+
+- **Antivírus:** identificação e bloqueio de arquivos e comportamentos maliciosos.
+- **Firewall:** monitoramento e controle das conexões de rede.
+- **Backups:** manutenção de cópias de segurança para recuperação de arquivos.
+- **Sandboxing:** execução de programas suspeitos em ambientes isolados.
+- **Conscientização:** cuidado com links, anexos e arquivos desconhecidos.
+- **Monitoramento:** identificação de atividades suspeitas no sistema.
+- **Privacidade:** proteção de informações pessoais e credenciais.
+
+## 🛠️ Tecnologias e ferramentas
+
+- Python 3
+- Cryptography (Fernet)
+- Pynput
+- Visual Studio Code
+- Kali Linux
+
+## 📚 Aprendizados
+
+O desenvolvimento desses experimentos proporcionou uma visão mais prática sobre conceitos de cibersegurança e programação com Python.
+
+Foi possível compreender como determinadas ameaças digitais operam, como arquivos podem ter seu acesso comprometido e como informações digitadas podem ser expostas por programas maliciosos.
+
+Além da implementação dos scripts, o projeto reforçou a importância de medidas preventivas, como backups, monitoramento de atividades suspeitas, proteção de credenciais e conscientização dos usuários.
+
+## ⚠️ Aviso de segurança
+
+Este projeto possui finalidade exclusivamente educacional e foi desenvolvido como parte dos estudos em cibersegurança.
+
+Os experimentos devem ser executados somente em ambientes controlados, com arquivos fictícios e autorização adequada.
+
+O Keylogger deve ser utilizado exclusivamente em sessões próprias e autorizadas. Não utilize os scripts para monitorar terceiros ou coletar informações sem consentimento.
+
+Não publique chaves criptográficas, senhas reais ou registros que contenham informações pessoais.
+
+## 🎓 Créditos
+
+Projeto desenvolvido durante os estudos na plataforma **Digital Innovation One (DIO)**.
+
+**Autor:** Gabriel
+
+**Área de estudo:** Cibersegurança e Python
+
+---
+
+*Conhecer o funcionamento das ameaças digitais é um passo importante para aprender a identificá-las e se defender delas.*
